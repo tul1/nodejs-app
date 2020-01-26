@@ -13,16 +13,16 @@ node {
        sh 'npm test'
      }
    }
-   stage('test with a DB') {
-     def mysql = docker.image('mysql').run("-e MYSQL_ALLOW_EMPTY_PASSWORD=yes") 
-     def myTestContainer = docker.image('node:4.6')
-     myTestContainer.pull()
-     myTestContainer.inside("--link ${mysql.id}:mysql") {
-          sh 'npm install --only=dev'
-          sh 'npm test'
-     }                                   
-     mysql.stop()
-   }                                     
+  //  stage('test with a DB') {
+  //    def mysql = docker.image('mysql').run("-e MYSQL_ALLOW_EMPTY_PASSWORD=yes") 
+  //    def myTestContainer = docker.image('node:4.6')
+  //    myTestContainer.pull()
+  //    myTestContainer.inside("--link ${mysql.id}:mysql") {
+  //         sh 'npm install --only=dev'
+  //         sh 'npm test'
+  //    }                                   
+  //    mysql.stop()
+  //  }                                     
    stage('docker build/push') {            
      docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
        def app = docker.build("tul1/nodejs_app:${commit_id}", '.').push()
