@@ -1,3 +1,3 @@
 # NodeJS app boilerplate
 
-Simple NodeJS boilerplate to create an app.
+Simple NodeJS boilerplate to create an Express application backend.
