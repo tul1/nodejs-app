@@ -1,8 +1,13 @@
 pipeline {
   agent { 
-    docker { image 'node' }
+    docker { image 'node:stretch-slim' }
   }
   stages {
+    stage('Install project dependencies') {
+      steps {
+        sh "npm install"
+      }
+    }
     stage('Lint ') {
       steps {
         sh "npm run lint"
