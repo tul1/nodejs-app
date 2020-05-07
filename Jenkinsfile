@@ -28,7 +28,9 @@ pipeline {
       }
     }
     stage('Build Docker image and push it into AWS') {
-      def shortCommit = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
+      script {
+        def shortCommit = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
+      }
       steps {
         sh "echo $shortCommit"
         // withCredentials([string(credentialsId: 'ecr_credential', variable: 'ECR_CREDENTIAL')]) {
