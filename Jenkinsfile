@@ -5,11 +5,11 @@ pipeline {
   stages {
     stage('Setup environment') {
       steps {
-        sh """
-          wget https://releases.hashicorp.com/terraform/0.12.24/terraform_0.12.24_linux_amd64.zip
-          echo y | unzip terraform_0.12.24_linux_amd64.zip
-          ./terraform --version
-        """
+        // sh """
+        //   wget https://releases.hashicorp.com/terraform/0.12.24/terraform_0.12.24_linux_amd64.zip
+        //   echo y | unzip terraform_0.12.24_linux_amd64.zip
+        //   ./terraform --version
+        // """
       }
     }
     stage('Install project dependencies') {
@@ -32,9 +32,9 @@ pipeline {
         withCredentials([string(credentialsId: 'cargo_io_credential', variable: 'CARGO_IO_CREDENTIAL')]) {
           script {
             def TAG = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
-            sh """
-              docker --version
-            """
+            // sh """
+            //   docker --version
+            // """
           }        
         }
       }
