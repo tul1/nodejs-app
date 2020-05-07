@@ -1,6 +1,6 @@
 pipeline {
   agent { 
-    docker { image 'node:stretch-slim' }
+    docker { image 'node' }
   }
   stages {
     stage('Setup environment') {
