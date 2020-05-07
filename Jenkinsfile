@@ -3,12 +3,13 @@ pipeline {
     docker { image 'node' }
   }
   stages {
+    def TERRAFORM = "~/terraform"
     stage('Setup environment') {
       steps {
         sh """
           wget https://releases.hashicorp.com/terraform/0.12.24/terraform_0.12.24_linux_amd64.zip
-          sudo unzip terraform_0.12.24_linux_amd64.zip -d /usr/local/bin/
-          terraform --version
+          unzip terraform_0.12.24_linux_amd64.zip 
+          ./${TERRAFORM} --version
         """
       }
     }
@@ -29,8 +30,9 @@ pipeline {
     }
     stage('Build Docker image and push it into AWS') {
       steps {
-        sh "echo push to registry"
-        //Push image into AWS registry
+        sh """
+          ./${TERRAFORM} --version
+        """
       }
     }
     stage('Create Infrastructure and deploy app') {
