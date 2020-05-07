@@ -29,17 +29,14 @@ pipeline {
     }
     stage('Build Docker image and push it into AWS') {
       steps {
-        script {
-          def shortCommit = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
-          sh "echo $shortCommit"
-        }
         withCredentials([string(credentialsId: 'cargo_io_credential', variable: 'CARGO_IO_CREDENTIAL')]) {
-          def TAG = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
-          sh """
-            echo $TAG
-            echo $CARGO_IO_CREDENTIAL
-          """
-        
+          script {
+            def TAG = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
+            sh """
+              echo $TAG
+              echo $CARGO_IO_CREDENTIAL
+            """
+          }        
         }
       }
     }
