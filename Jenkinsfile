@@ -31,9 +31,9 @@ pipeline {
       steps {
         script {
           def shortCommit = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
+          sh "echo $shortCommit"
         }
 
-        sh "echo $shortCommit"
         // withCredentials([string(credentialsId: 'ecr_credential', variable: 'ECR_CREDENTIAL')]) {
         //     sh """
         //       docker build -t 927291680788.dkr.ecr.eu-west-1.amazonaws.com/myapp:${TAG} .
