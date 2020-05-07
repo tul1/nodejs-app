@@ -1,4 +1,4 @@
-def TERRAFORM = ".//var/jenkins_home/workspace/node-app_master/terraform"
+def TAG = scm.branches[0].commitId
 pipeline {
   agent { 
     docker { image 'node' }
@@ -9,8 +9,7 @@ pipeline {
         sh """
           wget https://releases.hashicorp.com/terraform/0.12.24/terraform_0.12.24_linux_amd64.zip
           echo y | unzip terraform_0.12.24_linux_amd64.zip
-          pwd
-          ${TERRAFORM} --version
+          ./terraform --version
         """
       }
     }
@@ -31,9 +30,14 @@ pipeline {
     }
     stage('Build Docker image and push it into AWS') {
       steps {
-        sh """
-          ./${TERRAFORM} --version
-        """
+        sh "echo $TAG"
+        // withCredentials([string(credentialsId: 'ecr_credential', variable: 'ECR_CREDENTIAL')]) {
+        //     sh """
+        //       docker build -t 927291680788.dkr.ecr.eu-west-1.amazonaws.com/myapp:${TAG} .
+        //       docker login 
+        //       docker push 927291680788.dkr.ecr.eu-west-1.amazonaws.com/myapp:${TAG}
+        //     """
+        // }
       }
     }
     stage('Create Infrastructure and deploy app') {
