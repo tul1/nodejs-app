@@ -33,8 +33,7 @@ pipeline {
           script {
             def TAG = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
             sh """
-              echo $TAG
-              echo $CARGO_IO_CREDENTIAL
+              docker --version
             """
           }        
         }
