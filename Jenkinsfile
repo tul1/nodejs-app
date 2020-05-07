@@ -1,4 +1,4 @@
-def TERRAFORM = "./~/terraform"
+def TERRAFORM = ".//var/jenkins_home/workspace/node-app_master/terraform"
 pipeline {
   agent { 
     docker { image 'node' }
@@ -9,7 +9,6 @@ pipeline {
         sh """
           wget https://releases.hashicorp.com/terraform/0.12.24/terraform_0.12.24_linux_amd64.zip
           echo y | unzip terraform_0.12.24_linux_amd64.zip
-          ls
           pwd
           ${TERRAFORM} --version
         """
